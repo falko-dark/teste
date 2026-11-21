@@ -1,1 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meus saves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #e7e4f4;
+    --ink: #1d1a3b;
+    --muted: #5d5a7d;
+    --card: #ffffff;
+    --line: #c9c4e6;
+    --accent: #3a2fd1;
+    --accent-ink: #ffffff;
+    --ok: #17724a;
+    --pixel: "Silkscreen", "Courier New", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+  }
+  header, main, footer { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+  header { padding-top: 48px; padding-bottom: 24px; }
+  h1 {
+    font-family: var(--pixel);
+    font-size: clamp(2rem, 7vw, 3.4rem);
+    line-height: 1.05;
+    margin: 0 0 12px;
+    letter-spacing: 0;
+  }
+  header p { margin: 0; max-width: 60ch; color: var(--muted); }
 
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding-bottom: 40px;
+  }
+  .slot {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+  .capa {
+    aspect-ratio: 16 / 9;
+    display: grid;
+    place-items: center;
+    font-family: var(--pixel);
+    font-size: 2.6rem;
+    color: #fff;
+    border-bottom: 2px solid var(--ink);
+    background-size: cover;
+    background-position: center;
+  }
+  .corpo { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .corpo h2 { margin: 0; font-size: 1.15rem; }
+  .meta { margin: 0; font-size: .875rem; color: var(--muted); }
+  .status {
+    align-self: flex-start;
+    font-family: var(--pixel);
+    font-size: .75rem;
+    color: var(--ok);
+    border: 2px solid var(--ok);
+    border-radius: 4px;
+    padding: 1px 8px;
+  }
+  details { font-size: .875rem; }
+  summary { cursor: pointer; color: var(--accent); }
+  details p { margin: 6px 0 0; color: var(--muted); }
+  code {
+    background: #efedfa;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: .8rem;
+    word-break: break-all;
+  }
+  .baixar {
+    margin-top: auto;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 6px;
+  }
+  .baixar:hover { background: #2b21b0; }
+  a:focus-visible, summary:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+  .vazio { padding: 24px 0 40px; color: var(--muted); }
+  footer { padding-bottom: 48px; font-size: .875rem; color: var(--muted); }
+  footer p { max-width: 70ch; margin: 0 0 8px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Meus saves</h1>
+  <p>Terminei o jogo, o save fica aqui. Escolha um jogo, baixe o arquivo e coloque na pasta indicada.</p>
+</header>
+
+<main>
+  <div class="grid" id="lista"></div>
+  <p class="vazio" id="vazio" hidden>Nenhum save na lista ainda. Adicione um jogo no array JOGOS, dentro do script no final deste arquivo.</p>
+</main>
+
+<footer>
+  <p>Faça uma cópia do seu save atual antes de substituir por outro.</p>
+  <p>Alguns jogos ligam o save à conta Steam de quem jogou, então o arquivo pode não funcionar em outra conta.</p>
+</footer>
+
+<script>
+  /*
+    COMO ADICIONAR UM JOGO
+    1. Coloque o arquivo de save em saves/nome-do-jogo/
+    2. Copie um bloco { ... } abaixo, cole no fim da lista e troque os dados.
+    Campos:
+      nome       nome do jogo
+      plataforma onde você jogou (PC, PS5...)
+      status     ex.: "Zerado", "100%"
+      data       quando terminou
+      arquivo    caminho do save dentro do repositório
+      pasta      onde o save deve ser colocado no computador (veja no PCGamingWiki)
+      obs        aviso opcional
+      capa       opcional: caminho de uma imagem (ex.: "capas/hollow-knight.jpg")
+  */
+  const JOGOS = [
+    {
+      nome: "Hollow Knight",
+      plataforma: "PC",
+      status: "100%",
+      data: "2026-11-01",
+      arquivo: "saves/hollow-knight/user1.dat",
+      pasta: "%AppData%\\..\\LocalLow\\Team Cherry\\Hollow Knight",
+      obs: "Exemplo: troque pelos seus dados."
+    },
+    {
+      nome: "Exemplo de outro jogo",
+      plataforma: "PC",
+      status: "Zerado",
+      data: "2026-10-15",
+      arquivo: "saves/exemplo/save.sav",
+      pasta: "Documentos\\Meu Jogo\\Saves",
+      obs: ""
+    }
+  ];
+
+  function corDoNome(nome) {
+    let h = 0;
+    for (const c of nome) h = (h * 31 + c.charCodeAt(0)) % 360;
+    return "hsl(" + h + " 45% 38%)";
+  }
+
+  function formatarData(iso) {
+    const [a, m, d] = iso.split("-");
+    return d && m && a ? d + "/" + m + "/" + a : iso;
+  }
+
+  function el(tag, classe, texto) {
+    const e = document.createElement(tag);
+    if (classe) e.className = classe;
+    if (texto) e.textContent = texto;
+    return e;
+  }
+
+  const lista = document.getElementById("lista");
+
+  if (JOGOS.length === 0) {
+    document.getElementById("vazio").hidden = false;
+  }
+
+  JOGOS.forEach(function (j) {
+    const slot = el("article", "slot");
+
+    const capa = el("div", "capa");
+    if (j.capa) {
+      capa.style.backgroundImage = "url('" + j.capa + "')";
+      capa.setAttribute("role", "img");
+      capa.setAttribute("aria-label", "Capa de " + j.nome);
+    } else {
+      capa.style.background = corDoNome(j.nome);
+      capa.textContent = j.nome.trim().slice(0, 2).toUpperCase();
+    }
+    slot.appendChild(capa);
+
+    const corpo = el("div", "corpo");
+    corpo.appendChild(el("h2", "", j.nome));
+    corpo.appendChild(el("span", "status", j.status));
+    corpo.appendChild(el("p", "meta", j.plataforma + ", terminado em " + formatarData(j.data)));
+
+    const det = el("details");
+    det.appendChild(el("summary", "", "Onde colocar o save"));
+    const p = el("p");
+    const code = el("code", "", j.pasta);
+    p.appendChild(code);
+    det.appendChild(p);
+    if (j.obs) det.appendChild(el("p", "", j.obs));
+    corpo.appendChild(det);
+
+    const a = el("a", "baixar", "Baixar save");
+    a.href = j.arquivo;
+    a.setAttribute("download", "");
+    corpo.appendChild(a);
+
+    slot.appendChild(corpo);
+    lista.appendChild(slot);
+  });
+</script>
+</body>
+</html>
