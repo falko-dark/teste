@@ -6,89 +6,138 @@
 <title>Meus saves</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #e7e4f4;
-    --ink: #1d1a3b;
-    --muted: #5d5a7d;
-    --card: #ffffff;
-    --line: #c9c4e6;
-    --accent: #3a2fd1;
+    color-scheme: light;
+    --bg-1: #eef2f9;
+    --bg-2: #e9e8f6;
+    --bg-3: #e3eef5;
+    --ink: #2f3650;
+    --muted: #666e8c;
+    --card: #f8f9fd;
+    --line: #d6dbed;
+    --shadow: rgba(70, 80, 130, .10);
+    --accent: #5a6bc4;
+    --accent-hover: #4d5db3;
     --accent-ink: #ffffff;
-    --ok: #17724a;
-    --pixel: "Silkscreen", "Courier New", monospace;
-    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --link: #4f5fb8;
+    --bubble: #eaeefb;
+    --bubble-line: #aab4e6;
+    --code-bg: #eceffa;
+    --capa-s: 45%;
+    --capa-l: 83%;
+    --capa-ink: #2f3650;
+    --font: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --bg-1: #1b1f2e;
+      --bg-2: #1f2236;
+      --bg-3: #1c2634;
+      --ink: #d9deef;
+      --muted: #9aa2bf;
+      --card: #262b40;
+      --line: #363c58;
+      --shadow: rgba(0, 0, 0, .25);
+      --accent: #8c9bea;
+      --accent-hover: #a0adf0;
+      --accent-ink: #141828;
+      --link: #a3b0f0;
+      --bubble: #2d3350;
+      --bubble-line: #4d5887;
+      --code-bg: #20243a;
+      --capa-s: 25%;
+      --capa-l: 30%;
+      --capa-ink: #d9deef;
+    }
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    background: var(--bg);
+    min-height: 100vh;
+    background: linear-gradient(160deg, var(--bg-1), var(--bg-2) 55%, var(--bg-3));
+    background-attachment: fixed;
     color: var(--ink);
-    font-family: var(--sans);
-    line-height: 1.5;
+    font-family: var(--font);
+    line-height: 1.55;
   }
   header, main, footer { max-width: 960px; margin: 0 auto; padding: 0 20px; }
-  header { padding-top: 48px; padding-bottom: 24px; }
+  header { padding-top: 52px; padding-bottom: 28px; }
   h1 {
-    font-family: var(--pixel);
-    font-size: clamp(2rem, 7vw, 3.4rem);
-    line-height: 1.05;
-    margin: 0 0 12px;
-    letter-spacing: 0;
+    font-size: clamp(2rem, 6vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 10px;
   }
   header p { margin: 0; max-width: 60ch; color: var(--muted); }
 
+  /* align-items: start deixa cada card com a própria altura,
+     então abrir um não estica os vizinhos */
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    gap: 22px;
+    align-items: start;
     padding-bottom: 40px;
   }
   .slot {
     background: var(--card);
-    border: 2px solid var(--ink);
-    border-radius: 10px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 5px 5px 0 var(--ink);
+    box-shadow: 0 8px 26px var(--shadow);
   }
   .capa {
     aspect-ratio: 16 / 9;
     display: grid;
     place-items: center;
-    font-family: var(--pixel);
-    font-size: 2.6rem;
-    color: #fff;
-    border-bottom: 2px solid var(--ink);
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--capa-ink);
+    background: hsl(var(--h, 230) var(--capa-s) var(--capa-l));
     background-size: cover;
     background-position: center;
   }
-  .corpo { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-  .corpo h2 { margin: 0; font-size: 1.15rem; }
-  .meta { margin: 0; font-size: .875rem; color: var(--muted); }
-  .status {
-    align-self: flex-start;
-    font-family: var(--pixel);
-    font-size: .75rem;
-    color: var(--ok);
-    border: 2px solid var(--ok);
-    border-radius: 4px;
-    padding: 1px 8px;
+  .corpo { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 14px; }
+  .corpo h2 { margin: 0; font-size: 1.2rem; font-weight: 800; }
+
+  .balao {
+    position: relative;
+    margin: 0;
+    padding: 10px 14px;
+    background: var(--bubble);
+    border: 2px solid var(--bubble-line);
+    border-radius: 14px;
+    font-size: .95rem;
+    white-space: pre-wrap;
   }
-  details { font-size: .875rem; }
-  summary { cursor: pointer; color: var(--accent); }
-  details p { margin: 6px 0 0; color: var(--muted); }
-  code {
-    background: #efedfa;
-    padding: 1px 5px;
-    border-radius: 4px;
-    font-size: .8rem;
-    word-break: break-all;
+  .balao::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 24px;
+    width: 12px;
+    height: 12px;
+    background: var(--bubble);
+    border-left: 2px solid var(--bubble-line);
+    border-top: 2px solid var(--bubble-line);
+    transform: rotate(45deg);
+  }
+
+  details { font-size: .92rem; }
+  summary { cursor: pointer; color: var(--link); font-weight: 600; }
+  details .texto {
+    margin: 8px 0 0;
+    padding: 10px 12px;
+    background: var(--code-bg);
+    border-radius: 10px;
+    color: var(--ink);
+    white-space: pre-wrap;
+    word-break: break-word;
   }
   .baixar {
-    margin-top: auto;
     display: block;
     text-align: center;
     text-decoration: none;
@@ -96,13 +145,13 @@
     color: var(--accent-ink);
     font-weight: 700;
     padding: 10px 14px;
-    border-radius: 6px;
+    border-radius: 10px;
   }
-  .baixar:hover { background: #2b21b0; }
-  a:focus-visible, summary:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+  .baixar:hover { background: var(--accent-hover); }
+  a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
   .vazio { padding: 24px 0 40px; color: var(--muted); }
-  footer { padding-bottom: 48px; font-size: .875rem; color: var(--muted); }
+  footer { padding-bottom: 48px; font-size: .9rem; color: var(--muted); }
   footer p { max-width: 70ch; margin: 0 0 8px; }
 </style>
 </head>
@@ -128,46 +177,33 @@
     COMO ADICIONAR UM JOGO
     1. Coloque o arquivo de save em saves/nome-do-jogo/
     2. Copie um bloco { ... } abaixo, cole no fim da lista e troque os dados.
-    Campos:
+    Campos (tudo é texto livre, escreva o que quiser):
       nome       nome do jogo
-      plataforma onde você jogou (PC, PS5...)
-      status     ex.: "Zerado", "100%"
-      data       quando terminou
+      descricao  o texto que aparece no balão (plataforma, quando terminou, o que fez...)
+      pasta      o que aparece ao clicar em "Onde colocar o save"
       arquivo    caminho do save dentro do repositório
-      pasta      onde o save deve ser colocado no computador (veja no PCGamingWiki)
-      obs        aviso opcional
       capa       opcional: caminho de uma imagem (ex.: "capas/hollow-knight.jpg")
+    Dica: para quebrar linha dentro de um texto, use \n
   */
   const JOGOS = [
     {
       nome: "Hollow Knight",
-      plataforma: "PC",
-      status: "100%",
-      data: "2026-11-01",
-      arquivo: "saves/hollow-knight/user1.dat",
-      pasta: "%AppData%\\..\\LocalLow\\Team Cherry\\Hollow Knight",
-      obs: "Exemplo: troque pelos seus dados."
+      descricao: "Exemplo: escreva aqui o que quiser sobre o jogo, como onde jogou e quando terminou.",
+      pasta: "Exemplo: escreva aqui em qual pasta o save deve ser colocado.",
+      arquivo: "saves/hollow-knight/user1.dat"
     },
     {
       nome: "Exemplo de outro jogo",
-      plataforma: "PC",
-      status: "Zerado",
-      data: "2026-10-15",
-      arquivo: "saves/exemplo/save.sav",
-      pasta: "Documentos\\Meu Jogo\\Saves",
-      obs: ""
+      descricao: "Cada jogo tem o seu balão e a sua própria aba.",
+      pasta: "Documentos/Meu Jogo/Saves",
+      arquivo: "saves/exemplo/save.sav"
     }
   ];
 
-  function corDoNome(nome) {
+  function matizDoNome(nome) {
     let h = 0;
     for (const c of nome) h = (h * 31 + c.charCodeAt(0)) % 360;
-    return "hsl(" + h + " 45% 38%)";
-  }
-
-  function formatarData(iso) {
-    const [a, m, d] = iso.split("-");
-    return d && m && a ? d + "/" + m + "/" + a : iso;
+    return h;
   }
 
   function el(tag, classe, texto) {
@@ -192,24 +228,22 @@
       capa.setAttribute("role", "img");
       capa.setAttribute("aria-label", "Capa de " + j.nome);
     } else {
-      capa.style.background = corDoNome(j.nome);
+      capa.style.setProperty("--h", matizDoNome(j.nome));
       capa.textContent = j.nome.trim().slice(0, 2).toUpperCase();
     }
     slot.appendChild(capa);
 
     const corpo = el("div", "corpo");
     corpo.appendChild(el("h2", "", j.nome));
-    corpo.appendChild(el("span", "status", j.status));
-    corpo.appendChild(el("p", "meta", j.plataforma + ", terminado em " + formatarData(j.data)));
 
-    const det = el("details");
-    det.appendChild(el("summary", "", "Onde colocar o save"));
-    const p = el("p");
-    const code = el("code", "", j.pasta);
-    p.appendChild(code);
-    det.appendChild(p);
-    if (j.obs) det.appendChild(el("p", "", j.obs));
-    corpo.appendChild(det);
+    if (j.descricao) corpo.appendChild(el("p", "balao", j.descricao));
+
+    if (j.pasta) {
+      const det = el("details");
+      det.appendChild(el("summary", "", "Onde colocar o save"));
+      det.appendChild(el("p", "texto", j.pasta));
+      corpo.appendChild(det);
+    }
 
     const a = el("a", "baixar", "Baixar save");
     a.href = j.arquivo;
