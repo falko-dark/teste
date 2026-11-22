@@ -1,259 +1,550 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Meus saves</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    color-scheme: light;
-    --bg-1: #eef2f9;
-    --bg-2: #e9e8f6;
-    --bg-3: #e3eef5;
-    --ink: #2f3650;
-    --muted: #666e8c;
-    --card: #f8f9fd;
-    --line: #d6dbed;
-    --shadow: rgba(70, 80, 130, .10);
-    --accent: #5a6bc4;
-    --accent-hover: #4d5db3;
-    --accent-ink: #ffffff;
-    --link: #4f5fb8;
-    --bubble: #eaeefb;
-    --bubble-line: #aab4e6;
-    --code-bg: #eceffa;
-    --capa-s: 45%;
-    --capa-l: 83%;
-    --capa-ink: #2f3650;
-    --font: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      color-scheme: dark;
-      --bg-1: #1b1f2e;
-      --bg-2: #1f2236;
-      --bg-3: #1c2634;
-      --ink: #d9deef;
-      --muted: #9aa2bf;
-      --card: #262b40;
-      --line: #363c58;
-      --shadow: rgba(0, 0, 0, .25);
-      --accent: #8c9bea;
-      --accent-hover: #a0adf0;
-      --accent-ink: #141828;
-      --link: #a3b0f0;
-      --bubble: #2d3350;
-      --bubble-line: #4d5887;
-      --code-bg: #20243a;
-      --capa-s: 25%;
-      --capa-l: 30%;
-      --capa-ink: #d9deef;
-    }
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    min-height: 100vh;
-    background: linear-gradient(160deg, var(--bg-1), var(--bg-2) 55%, var(--bg-3));
-    background-attachment: fixed;
-    color: var(--ink);
-    font-family: var(--font);
-    line-height: 1.55;
-  }
-  header, main, footer { max-width: 960px; margin: 0 auto; padding: 0 20px; }
-  header { padding-top: 52px; padding-bottom: 28px; }
-  h1 {
-    font-size: clamp(2rem, 6vw, 2.8rem);
-    font-weight: 800;
-    line-height: 1.1;
-    margin: 0 0 10px;
-  }
-  header p { margin: 0; max-width: 60ch; color: var(--muted); }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Minha página</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+            --bg-1: #eef2f9;
+            --bg-2: #e9e8f6;
+            --bg-3: #e3eef5;
+            --ink: #2f3650;
+            --muted: #666e8c;
+            --card: #f8f9fd;
+            --line: #d6dbed;
+            --shadow: rgba(70, 80, 130, .10);
+            --accent: #5a6bc4;
+            --link: #4f5fb8;
+            --row: #eef0fa;
+            --capa-s: 45%;
+            --capa-l: 83%;
+            --capa-ink: #2f3650;
+            --font: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        }
 
-  /* align-items: start deixa cada card com a própria altura,
-     então abrir um não estica os vizinhos */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 22px;
-    align-items: start;
-    padding-bottom: 40px;
-  }
-  .slot {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 8px 26px var(--shadow);
-  }
-  .capa {
-    aspect-ratio: 16 / 9;
-    display: grid;
-    place-items: center;
-    font-size: 2.4rem;
-    font-weight: 800;
-    color: var(--capa-ink);
-    background: hsl(var(--h, 230) var(--capa-s) var(--capa-l));
-    background-size: cover;
-    background-position: center;
-  }
-  .corpo { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 14px; }
-  .corpo h2 { margin: 0; font-size: 1.2rem; font-weight: 800; }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                color-scheme: dark;
+                --bg-1: #1b1f2e;
+                --bg-2: #1f2236;
+                --bg-3: #1c2634;
+                --ink: #d9deef;
+                --muted: #9aa2bf;
+                --card: #262b40;
+                --line: #363c58;
+                --shadow: rgba(0, 0, 0, .25);
+                --accent: #8c9bea;
+                --link: #a3b0f0;
+                --row: #2b3150;
+                --capa-s: 25%;
+                --capa-l: 30%;
+                --capa-ink: #d9deef;
+            }
+        }
 
-  .balao {
-    position: relative;
-    margin: 0;
-    padding: 10px 14px;
-    background: var(--bubble);
-    border: 2px solid var(--bubble-line);
-    border-radius: 14px;
-    font-size: .95rem;
-    white-space: pre-wrap;
-  }
-  .balao::before {
-    content: "";
-    position: absolute;
-    top: -8px;
-    left: 24px;
-    width: 12px;
-    height: 12px;
-    background: var(--bubble);
-    border-left: 2px solid var(--bubble-line);
-    border-top: 2px solid var(--bubble-line);
-    transform: rotate(45deg);
-  }
+        * {
+            box-sizing: border-box;
+        }
 
-  details { font-size: .92rem; }
-  summary { cursor: pointer; color: var(--link); font-weight: 600; }
-  details .texto {
-    margin: 8px 0 0;
-    padding: 10px 12px;
-    background: var(--code-bg);
-    border-radius: 10px;
-    color: var(--ink);
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
-  .baixar {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    background: var(--accent);
-    color: var(--accent-ink);
-    font-weight: 700;
-    padding: 10px 14px;
-    border-radius: 10px;
-  }
-  .baixar:hover { background: var(--accent-hover); }
-  a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(160deg, var(--bg-1), var(--bg-2) 55%, var(--bg-3));
+            background-attachment: fixed;
+            color: var(--ink);
+            font-family: var(--font);
+            line-height: 1.55;
+        }
 
-  .vazio { padding: 24px 0 40px; color: var(--muted); }
-  footer { padding-bottom: 48px; font-size: .9rem; color: var(--muted); }
-  footer p { max-width: 70ch; margin: 0 0 8px; }
-</style>
+        body:has(dialog[open]) {
+            overflow: hidden;
+        }
+
+        header,
+        main,
+        footer {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding-top: 52px;
+            padding-bottom: 28px;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 2.8rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin: 0 0 10px;
+        }
+
+        header p {
+            margin: 0;
+            max-width: 60ch;
+            color: var(--muted);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 22px;
+            padding-bottom: 40px;
+        }
+
+        .slot {
+            display: flex;
+            flex-direction: column;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 26px var(--shadow);
+        }
+
+        .capa {
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            color: var(--capa-ink);
+            background: hsl(var(--h, 230) var(--capa-s) var(--capa-l));
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slot .capa {
+            aspect-ratio: 16 / 9;
+            font-size: 2.4rem;
+        }
+
+        .corpo {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 16px 18px 18px;
+        }
+
+        .corpo h2 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 800;
+        }
+
+        .desc {
+            margin: 0 0 8px;
+            color: var(--muted);
+            font-size: .92rem;
+            white-space: pre-wrap;
+        }
+
+        .abrir {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            font: inherit;
+            font-weight: 700;
+            font-size: .92rem;
+            color: var(--ink);
+            background: transparent;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 10px 14px;
+            cursor: pointer;
+        }
+
+        .abrir:hover {
+            border-color: var(--accent);
+            color: var(--link);
+        }
+
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        dialog {
+            width: min(680px, 92vw);
+            max-height: 88vh;
+            padding: 0;
+            color: var(--ink);
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(20, 25, 50, .35);
+        }
+
+        dialog::backdrop {
+            background: rgba(30, 35, 60, .45);
+        }
+
+        dialog[open] {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .j-wrap {
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .j-topo {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            padding: 22px 22px 18px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .j-capa {
+            flex: none;
+            width: 72px;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            font-size: 1.4rem;
+        }
+
+        .j-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .j-info h2 {
+            margin: 0 0 4px;
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        .j-info p {
+            margin: 0;
+            color: var(--muted);
+            font-size: .92rem;
+            white-space: pre-wrap;
+        }
+
+        .fechar {
+            flex: none;
+            width: 36px;
+            height: 36px;
+            font: inherit;
+            font-size: 1rem;
+            color: var(--ink);
+            background: transparent;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .fechar:hover {
+            border-color: var(--accent);
+        }
+
+        .j-corpo {
+            padding: 18px 22px 24px;
+            overflow-y: auto;
+        }
+
+        .j-corpo h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 0 12px;
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .conta {
+            font-size: .8rem;
+            padding: 0 8px;
+            border-radius: 99px;
+            background: var(--row);
+            color: var(--link);
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 8px;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            color: var(--ink);
+            text-decoration: none;
+            background: var(--row);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+        }
+
+        .item:hover {
+            border-color: var(--accent);
+        }
+
+        .ic {
+            flex: none;
+            font-size: 1.2rem;
+        }
+
+        .txt {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .txt strong {
+            display: block;
+            font-weight: 700;
+        }
+
+        .txt small {
+            display: block;
+            color: var(--muted);
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .seta {
+            flex: none;
+            color: var(--muted);
+        }
+
+        .vazio {
+            color: var(--muted);
+        }
+
+        footer {
+            padding-bottom: 48px;
+            font-size: .9rem;
+            color: var(--muted);
+        }
+
+        footer p {
+            max-width: 70ch;
+            margin: 0 0 8px;
+        }
+    </style>
 </head>
+
 <body>
 
-<header>
-  <h1>Meus saves</h1>
-  <p>Terminei o jogo, o save fica aqui. Escolha um jogo, baixe o arquivo e coloque na pasta indicada.</p>
-</header>
+    <header>
+        <h1>Compilado de Saves, mods, texturas</h1>
+        <p>Saves, mods, texturas e tudo que eu usei ou criei em cada jogo. Abra um jogo para ver o conteúdo.</p><br>
 
-<main>
-  <div class="grid" id="lista"></div>
-  <p class="vazio" id="vazio" hidden>Nenhum save na lista ainda. Adicione um jogo no array JOGOS, dentro do script no final deste arquivo.</p>
-</main>
+        <h2>🚨 AVISO 🚨</h2>
+        <fieldset>
+            <p>-Sempre faça uma cópia do seu save atual antes de substituir por outro.</p>
+            <p>-Alguns jogos ligam o save à conta Steam de quem jogou, então o arquivo pode não funcionar em outra
+                conta.</p>
+        </fieldset>
+    </header>
 
-<footer>
-  <p>Faça uma cópia do seu save atual antes de substituir por outro.</p>
-  <p>Alguns jogos ligam o save à conta Steam de quem jogou, então o arquivo pode não funcionar em outra conta.</p>
-</footer>
+    <main>
+        <div class="grid" id="lista"></div>
+    </main>
 
-<script>
-  /*
-    COMO ADICIONAR UM JOGO
-    1. Coloque o arquivo de save em saves/nome-do-jogo/
-    2. Copie um bloco { ... } abaixo, cole no fim da lista e troque os dados.
-    Campos (tudo é texto livre, escreva o que quiser):
-      nome       nome do jogo
-      descricao  o texto que aparece no balão (plataforma, quando terminou, o que fez...)
-      pasta      o que aparece ao clicar em "Onde colocar o save"
-      arquivo    caminho do save dentro do repositório
-      capa       opcional: caminho de uma imagem (ex.: "capas/hollow-knight.jpg")
-    Dica: para quebrar linha dentro de um texto, use \n
-  */
-  const JOGOS = [
-    {
-      nome: "Hollow Knight",
-      descricao: "Exemplo: escreva aqui o que quiser sobre o jogo, como onde jogou e quando terminou.",
-      pasta: "Exemplo: escreva aqui em qual pasta o save deve ser colocado.",
-      arquivo: "saves/hollow-knight/user1.dat",
-      capa: "capas/hollow-knight.jpg"
-    },
-    {
-      nome: "Exemplo de outro jogo",
-      descricao: "Cada jogo tem o seu balão e a sua própria aba.",
-      pasta: "Documentos/Meu Jogo/Saves",
-      arquivo: "saves/exemplo/save.sav"
-    }
-  ];
+    <!--<footer>
+        <p>Sempre faça uma cópia do seu save atual antes de substituir por outro.</p>
+        <p>Alguns jogos ligam o save à conta Steam de quem jogou, então o arquivo pode não funcionar em outra conta.</p>
+    </footer>  -->
 
-  function matizDoNome(nome) {
-    let h = 0;
-    for (const c of nome) h = (h * 31 + c.charCodeAt(0)) % 360;
-    return h;
-  }
+    <dialog id="janela" aria-labelledby="j-titulo">
+        <div class="j-wrap">
+            <div class="j-topo">
+                <div class="j-info">
+                    <h2 id="j-titulo"></h2>
+                    <p id="j-desc"></p>
+                </div>
+                <button class="fechar" id="j-fechar" aria-label="Fechar">✕</button>
+            </div>
+            <div class="j-corpo">
+                <h3>Conteúdo <span class="conta" id="j-conta"></span></h3>
+                <ul id="j-lista"></ul>
+            </div>
+        </div>
+    </dialog>
 
-  function el(tag, classe, texto) {
-    const e = document.createElement(tag);
-    if (classe) e.className = classe;
-    if (texto) e.textContent = texto;
-    return e;
-  }
+    <script>
+        /*
+          COMO ADICIONAR UM JOGO
+          Copie um bloco { ... } da lista JOGOS, cole no fim e troque os dados.
+      
+          Campos do jogo:
+            nome       nome do jogo
+            descricao  texto curto que aparece no card (para quebrar linha use \n)
+            capa       opcional: imagem, ex.: "capas/hollow-knight.jpg"
+            conteudo   lista de tudo que você usou ou criou nesse jogo
+      
+          Campos de cada item do conteudo:
+            icone      um emoji, ex.: "💾" save, "🧩" mod, "🖼️" textura, "🛠️" coisa que você fez
+            titulo     nome do item
+            arquivo    caminho de um arquivo do repositório ("saves/jogo/save.sav")
+                       ou um link de outro site ("https://...")
+            nota       opcional: texto extra, como a pasta onde colocar o save
+      
+          Atenção: vírgula depois de cada campo e de cada bloco, menos no último.
+        */
+        const JOGOS = [
+            {
+                nome: "Hollow Knight",
+                descricao: "Texto curto do card.",
+                capa: "capas/hollow-knight.jpg",
+                conteudo: [
+                    { icone: "💾", titulo: "Save 100%", arquivo: "saves/hollow-knight/user1.dat", nota: "Colocar em Documentos/..." },
+                    { icone: "🧩", titulo: "Mods que usei", arquivo: "https://link-do-mod" },
+                    { icone: "🖼️", titulo: "Texturas", arquivo: "texturas/hollow-knight.zip" }
+                ]
+            },
+            {
+                nome: "Terraria",
+                descricao: "Jogão.",
+                capa: "capas/terraria.jpg",
+                conteudo: [
+                    { icone: "💾", titulo: "Save 100%", arquivo: "saves/hollow-knight/user1.dat", nota: "Colocar em /Documents/My Games/Terraria" },
+                    { icone: "💾", titulo: "Save v2", arquivo: "saves/hollow-knight/user1.dat", nota: "Colocar em /Documents/My Games/Terraria" },
+                    { icone: "🧩", titulo: "Mods que usei", arquivo: "https://link-do-mod" },
+                    { icone: "🖼️", titulo: "Texturas", arquivo: "texturas/hollow-knight.zip" }
+                ]
+            },
+            {
+                nome: "Cyberpunk 2077",
+                descricao: "Texto curto do card.",
+                capa: "capas/cyberpunk2077.jpg",
+                conteudo: [
+                    { icone: "💾", titulo: "Save 100%", arquivo: "saves/hollow-knight/user1.dat", nota: "Colocar em Documentos/..." },
+                    { icone: "🧩", titulo: "Mods que usei", arquivo: "https://link-do-mod" },
+                    { icone: "🖼️", titulo: "Texturas", arquivo: "texturas/hollow-knight.zip" }
+                ]
+            },
+            {
+                nome: "baldur's gate 3",
+                descricao: "Texto curto do card.",
+                capa: "capas/baldursgate3.jpg",
+                conteudo: [
+                    { icone: "💾", titulo: "Save 100%", arquivo: "saves/hollow-knight/user1.dat", nota: "Colocar em Documentos/..." },
+                    { icone: "🧩", titulo: "Mods que usei", arquivo: "https://link-do-mod" },
+                    { icone: "🖼️", titulo: "Texturas", arquivo: "texturas/hollow-knight.zip" }
+                ]
+            },
+            {
+                nome: "Exemplo de outro jogo",
+                descricao: "Cada jogo tem o seu botão e a sua própria janela.",
+                conteudo: [
+                    { icone: "💾", titulo: "Save final", arquivo: "saves/exemplo/save.sav", nota: "Documentos/Meu Jogo/Saves" },
+                    { icone: "🛠️", titulo: "Mod que eu fiz", arquivo: "meus-mods/exemplo.zip" }
+                ]
+            }
+        ];
 
-  const lista = document.getElementById("lista");
+        function matizDoNome(nome) {
+            let h = 0;
+            for (const c of nome) h = (h * 31 + c.charCodeAt(0)) % 360;
+            return h;
+        }
 
-  if (JOGOS.length === 0) {
-    document.getElementById("vazio").hidden = false;
-  }
+        function el(tag, classe, texto) {
+            const e = document.createElement(tag);
+            if (classe) e.className = classe;
+            if (texto) e.textContent = texto;
+            return e;
+        }
 
-  JOGOS.forEach(function (j) {
-    const slot = el("article", "slot");
+        function aplicarCapa(elemento, j) {
+            elemento.style.backgroundImage = "";
+            elemento.style.removeProperty("--h");
+            elemento.textContent = "";
+            elemento.removeAttribute("role");
+            elemento.removeAttribute("aria-label");
+            if (j.capa) {
+                elemento.style.backgroundImage = "url('" + j.capa + "')";
+                elemento.setAttribute("role", "img");
+                elemento.setAttribute("aria-label", "Capa de " + j.nome);
+            } else {
+                elemento.style.setProperty("--h", matizDoNome(j.nome));
+                elemento.textContent = j.nome.trim().slice(0, 2).toUpperCase();
+            }
+        }
 
-    const capa = el("div", "capa");
-    if (j.capa) {
-      capa.style.backgroundImage = "url('" + j.capa + "')";
-      capa.setAttribute("role", "img");
-      capa.setAttribute("aria-label", "Capa de " + j.nome);
-    } else {
-      capa.style.setProperty("--h", matizDoNome(j.nome));
-      capa.textContent = j.nome.trim().slice(0, 2).toUpperCase();
-    }
-    slot.appendChild(capa);
+        const janela = document.getElementById("janela");
 
-    const corpo = el("div", "corpo");
-    corpo.appendChild(el("h2", "", j.nome));
+        function abrirJogo(j) {
+            document.getElementById("j-titulo").textContent = j.nome;
+            document.getElementById("j-desc").textContent = j.descricao || "";
 
-    if (j.descricao) corpo.appendChild(el("p", "balao", j.descricao));
+            const itens = j.conteudo || [];
+            document.getElementById("j-conta").textContent = itens.length;
+            const ul = document.getElementById("j-lista");
+            ul.textContent = "";
 
-    if (j.pasta) {
-      const det = el("details");
-      det.appendChild(el("summary", "", "Onde colocar o save"));
-      det.appendChild(el("p", "texto", j.pasta));
-      corpo.appendChild(det);
-    }
+            if (itens.length === 0) {
+                ul.appendChild(el("li", "vazio", "Nada adicionado ainda."));
+            }
 
-    const a = el("a", "baixar", "Baixar save");
-    a.href = j.arquivo;
-    a.setAttribute("download", "");
-    corpo.appendChild(a);
+            itens.forEach(function (it) {
+                const li = el("li");
+                const externo = /^https?:\/\//.test(it.arquivo);
+                const a = el("a", "item");
+                a.href = it.arquivo;
+                if (externo) {
+                    a.target = "_blank";
+                    a.rel = "noopener noreferrer";
+                } else {
+                    a.setAttribute("download", "");
+                }
+                a.appendChild(el("span", "ic", it.icone || "📄"));
+                const txt = el("div", "txt");
+                txt.appendChild(el("strong", "", it.titulo));
+                if (it.nota) txt.appendChild(el("small", "", it.nota));
+                a.appendChild(txt);
+                a.appendChild(el("span", "seta", externo ? "↗" : "↓"));
+                li.appendChild(a);
+                ul.appendChild(li);
+            });
 
-    slot.appendChild(corpo);
-    lista.appendChild(slot);
-  });
-</script>
+            janela.showModal();
+            janela.querySelector(".j-corpo").scrollTop = 0;
+        }
+
+        document.getElementById("j-fechar").addEventListener("click", function () { janela.close(); });
+        janela.addEventListener("click", function (e) { if (e.target === janela) janela.close(); });
+
+        const lista = document.getElementById("lista");
+        JOGOS.forEach(function (j) {
+            const slot = el("article", "slot");
+            const capa = el("div", "capa");
+            aplicarCapa(capa, j);
+            slot.appendChild(capa);
+
+            const corpo = el("div", "corpo");
+            corpo.appendChild(el("h2", "", j.nome));
+            if (j.descricao) corpo.appendChild(el("p", "desc", j.descricao));
+
+            const botao = el("button", "abrir");
+            botao.type = "button";
+            botao.appendChild(el("span", "", "Explorar conteúdo"));
+            botao.appendChild(el("span", "", "↗"));
+            botao.addEventListener("click", function () { abrirJogo(j); });
+            corpo.appendChild(botao);
+
+            slot.appendChild(corpo);
+            lista.appendChild(slot);
+        });
+    </script>
 </body>
+
 </html>
